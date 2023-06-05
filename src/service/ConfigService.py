@@ -1,6 +1,8 @@
-from src.model.Config import Config
+from model.Config import Config
 
-def local() -> Config:
-    config = Config("local[*]")
+
+def test() -> Config:
+    config = Config(read_path="main.py",
+                    write_path="out.csv",
+                    spark_master="local[*]")
     return config
-        
