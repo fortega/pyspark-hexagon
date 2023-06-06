@@ -6,17 +6,17 @@ from service import SparkService
 
 def run():
     config = ConfigService.test()
-    spark = SparkService.create_session(config)
+    spark = SparkService.create_session(spark_master=config.spark_master)
 
     reader = TextReader()
     raw = reader.read(spark=spark, path=config.read_path)
 
     count = SparkService.countValues(data=raw)
-    count.show()
-    
+    count.show(n=100, truncate=False)
+
     writer = CsvWriter()
     writer.write(data=count, path=config.write_path)
-    
+
     spark.stop()
 
 
